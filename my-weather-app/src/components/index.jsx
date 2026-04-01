@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import Alert from '@mui/material/Alert';
+import CircularProgress from "@mui/material/CircularProgress";
 import weatherImg from "../assets/weather.png";
 
 function Index() {
@@ -22,14 +24,10 @@ function Index() {
     fetch(
       `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(location)}&limit=1&appid=${apiKey}`,
     )
-      .then(async (response) => {
+      .then((response) => {
         if (!response.ok) {
-          const errorData = await response.json().catch(() => null);
-          throw new Error(
-            errorData?.message || "Unable to look up that location right now.",
-          );
+          throw new Error("Unable to look up that location right now.");
         }
-
         return response.json();
       })
       .then((locationData) => {
@@ -56,12 +54,9 @@ function Index() {
     fetch(
       `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`,
     )
-      .then(async (response) => {
+      .then((response) => {
         if (!response.ok) {
-          const errorData = await response.json().catch(() => null);
-          throw new Error(
-            errorData?.message || "Weather data is unavailable right now.",
-          );
+          throw new Error("Weather data is unavailable right now.");
         }
 
         return response.json();
@@ -131,8 +126,8 @@ function Index() {
         </Button>
       </form>
 
-      {loading && <p>Loading...</p>}
-      {error && <p>Error: {error}</p>}
+      {loading && <div className="loading"><CircularProgress/></div>}
+      {error && <Alert severity="error">{error}</Alert>}
 
       {weather && (
         <div className="output">
