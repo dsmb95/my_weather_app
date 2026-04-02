@@ -37,6 +37,8 @@ h1 {
   text-align: center;
   background-color: rgb(112, 128, 144);
   border-radius: 15px;
+  width: 500px;
+  margin: auto;
 }
 
 .output h3 {
@@ -48,4 +50,60 @@ h1 {
   justify-content: center;
   align-items: center;
   min-height: "200px";
+}
+
+.carousel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.carousel h4 {
+  font-size: 20px;
+}
+
+.slide{
+  width: 200px;
+  height: 200px;
+}
+.slide-hidden {
+  display: none;
+}
+
+.arrow {
+  position: absolute;
+  width: 2rem;
+  height: 2rem;
+  color:black;
+}
+.arrow:hover {
+  cursor: pointer;
+}
+
+.arrow-left {
+  left: 0.1rem;
+}
+
+.arrow-right {
+  right: 0.1rem;
+}
+
+.indicators {
+  display: flex;
+  position: absolute;
+  bottom: 1rem;
+}
+.indicator {
+  background-color: black;
+  height: 0.5rem;
+  width: 0.5rem;
+  border-radius: 100%;
+  border: none;
+  outline: none;
+  box-shadow: 0px 0px 5px;
+  margin: 0 0.2rem;
+  cursor: pointer;
+}
+.indicator-inactive {
+  background-color: grey;
 }
