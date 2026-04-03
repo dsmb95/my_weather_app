@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import Alert from '@mui/material/Alert';
+import Alert from "@mui/material/Alert";
 import CircularProgress from "@mui/material/CircularProgress";
+import { BsArrowLeftCircleFill, BsArrowRightCircleFill } from "react-icons/bs";
 import weatherImg from "../assets/weather.png";
+import { fontSize } from "@mui/system";
 
-function Index() {
+function WeatherCelsius() {
   const [weather, setWeather] = useState(null);
   const [inputLoc, setInputLoc] = useState("");
   const [location, setLocation] = useState("");
@@ -13,6 +15,7 @@ function Index() {
   const [lon, setLon] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [slide, setSlide] = useState(0);
   const apiKey = import.meta.env.VITE_WEATHER_API_KEY?.trim();
 
   /* useEffect to fetch the  latitute and longitude variables to pass into the actual API call for the weather specific to the area. */
@@ -73,6 +76,7 @@ function Index() {
           description: weatherData.weather[0].description,
           weather_icon: `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`,
         });
+
         setLoading(false);
       })
       .catch((err) => {
@@ -82,13 +86,25 @@ function Index() {
       });
   }, [apiKey, lat, lon]);
 
+  // Carousel Area
+  const weatherSlides = weather
+    ? [
+        { title: "Temperature", value: `${weather.temp.toFixed(1)} °C` },
+        { title: "Feels Like", value: `${weather.feels_like.toFixed(1)} °C` },
+        { title: "Humidity", value: `${weather.humidity} %` },
+      ]
+    : [];
+
+  const nextSlide = () => {
+    setSlide(slide === weatherSlides.length - 1 ? 0 : slide + 1);
+  };
+
+  const prevSlide = () => {
+    setSlide(slide === 0 ? weatherSlides.length - 1 : slide - 1);
+  };
+
   return (
     <>
-      <div className="page-head">
-        <h1>The Weather App</h1>
-        <img src={weatherImg} alt="Weather icon" />
-      </div>
-
       <form
         className="form"
         onSubmit={(e) => {
@@ -121,12 +137,16 @@ function Index() {
           onChange={({ target }) => setInputLoc(target.value)}
           placeholder="Enter a city"
         />
-        <Button type="submit" variant="outlined">
+        <Button type="submit" variant="outlined" className="search">
           Search
         </Button>
       </form>
 
-      {loading && <div className="loading"><CircularProgress/></div>}
+      {loading && (
+        <div className="loading">
+          <CircularProgress />
+        </div>
+      )}
       {error && <Alert severity="error">{error}</Alert>}
 
       {weather && (
@@ -135,13 +155,41 @@ function Index() {
           <h3>{location.charAt(0).toUpperCase() + location.slice(1)}</h3>
           <img src={weather.weather_icon} alt="Weather Icon" />
           <p>You will experience {weather.description}.</p>
-          <p>Temperature: {weather.temp.toFixed(1)} °C</p>
-          <p>Feels like: {weather.feels_like.toFixed(1)} °C</p>
-          <p>Humidity: {weather.humidity}%</p>
+          <div className="carousel">
+            <BsArrowLeftCircleFill
+              className="arrow arrow-left"
+              onClick={prevSlide}
+            />
+            {weatherSlides.map((info, i) => {
+              return (
+                <div className={slide === i ? "slide" : "slide slide-hidden"}>
+                  <h4>{info.title}</h4>
+                  <p style={{ fontSize: "30px" }}>{info.value}</p>
+                </div>
+              );
+            })}
+            <BsArrowRightCircleFill
+              className="arrow arrow-right"
+              onClick={nextSlide}
+            />
+            <span className="indicators">
+              {weatherSlides.map((_, i) => {
+                return (
+                  <button
+                    key={i}
+                    onClick={null}
+                    className={
+                      slide === i ? "indicator" : "indicator indicator-inactive"
+                    }
+                  ></button>
+                );
+              })}
+            </span>
+          </div>
         </div>
       )}
     </>
   );
 }
 
-export default Index;
+export default WeatherCelsius;
