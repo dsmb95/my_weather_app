@@ -12,6 +12,21 @@ h1 {
   font-size: 3.5rem;
 }
 
+.home {
+  text-decoration: none;
+  color: inherit;
+}
+
+.welcome {
+  justify-self: center;
+  font-size: 20px;
+}
+
+.instructions {
+  justify-self: center;
+  font-size: 12px;
+}
+
 .page-head {
   display: flex;
   justify-self: center;
@@ -106,4 +121,34 @@ h1 {
 }
 .indicator-inactive {
   background-color: grey;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+
+}
+
+.nav-link {
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+  font-size: 23px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+  color:rgb(112, 128, 144);
+  background-color: #f3f2ef;
+  border-radius: 10px;
+  color:rgb(112, 128, 144);
+  border: solid  1px;
+}
+
+.nav-link.active {
+  color: rgb(112, 128, 144);
+  border-bottom: 2px solid rgb(112, 128, 144);
 }

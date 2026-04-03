@@ -7,7 +7,7 @@ import { BsArrowLeftCircleFill, BsArrowRightCircleFill } from "react-icons/bs";
 import weatherImg from "../assets/weather.png";
 import { fontSize } from "@mui/system";
 
-function Index() {
+function WeatherCelsius() {
   const [weather, setWeather] = useState(null);
   const [inputLoc, setInputLoc] = useState("");
   const [location, setLocation] = useState("");
@@ -105,11 +105,6 @@ function Index() {
 
   return (
     <>
-      <div className="page-head">
-        <h1>The Weather App</h1>
-        <img src={weatherImg} alt="Weather icon" />
-      </div>
-
       <form
         className="form"
         onSubmit={(e) => {
@@ -142,7 +137,7 @@ function Index() {
           onChange={({ target }) => setInputLoc(target.value)}
           placeholder="Enter a city"
         />
-        <Button type="submit" variant="outlined">
+        <Button type="submit" variant="outlined" className="search">
           Search
         </Button>
       </form>
@@ -197,4 +192,4 @@ function Index() {
   );
 }
 
-export default Index;
+export default WeatherCelsius;
