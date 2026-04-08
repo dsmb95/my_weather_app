@@ -84,6 +84,29 @@ function WeatherFahrenheit() {
       });
   }, [apiKey, lat, lon]);
 
+  function handleSubmit(e) {
+    e.preventDefault();
+          if (!inputLoc.trim()) {
+            setError("Please enter a city.");
+            setWeather(null);
+            return;
+          }
+
+          if (!apiKey) {
+            setError("Missing VITE_WEATHER_API_KEY. Add it to a .env file.");
+            setWeather(null);
+            return;
+          }
+
+          setLoading(true);
+          setError(null);
+          setWeather(null);
+          setLat(null);
+          setLon(null);
+          setLocation(inputLoc);
+          setInputLoc('');
+  }
+
   // Carousel Area
   const weatherSlides = weather
     ? [
@@ -105,27 +128,7 @@ function WeatherFahrenheit() {
     <>
       <form
         className="form"
-        onSubmit={(e) => {
-          e.preventDefault();
-          if (!inputLoc.trim()) {
-            setError("Please enter a city.");
-            setWeather(null);
-            return;
-          }
-
-          if (!apiKey) {
-            setError("Missing VITE_WEATHER_API_KEY. Add it to a .env file.");
-            setWeather(null);
-            return;
-          }
-
-          setLoading(true);
-          setError(null);
-          setWeather(null);
-          setLat(null);
-          setLon(null);
-          setLocation(inputLoc);
-        }}
+        onSubmit={handleSubmit}
       >
         <TextField
           id="outlined-basic"
