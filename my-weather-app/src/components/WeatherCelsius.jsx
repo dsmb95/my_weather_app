@@ -4,8 +4,6 @@ import TextField from "@mui/material/TextField";
 import Alert from "@mui/material/Alert";
 import CircularProgress from "@mui/material/CircularProgress";
 import { BsArrowLeftCircleFill, BsArrowRightCircleFill } from "react-icons/bs";
-import weatherImg from "../assets/weather.png";
-import { fontSize } from "@mui/system";
 
 function WeatherCelsius() {
   const [weather, setWeather] = useState(null);
