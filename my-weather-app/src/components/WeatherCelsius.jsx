@@ -134,11 +134,17 @@ function WeatherCelsius() {
           id="outlined-basic"
           label="City"
           variant="outlined"
+          fullWidth
           value={inputLoc}
           onChange={({ target }) => setInputLoc(target.value)}
           placeholder="Enter a city"
         />
-        <Button type="submit" variant="outlined" className="search">
+        <Button
+          type="submit"
+          variant="outlined"
+          className="search-button"
+          sx={{ minHeight: 56 }}
+        >
           Search
         </Button>
       </form>
@@ -163,7 +169,10 @@ function WeatherCelsius() {
             />
             {weatherSlides.map((info, i) => {
               return (
-                <div className={slide === i ? "slide" : "slide slide-hidden"}>
+                <div
+                  key={info.title}
+                  className={slide === i ? "slide" : "slide slide-hidden"}
+                >
                   <h4>{info.title}</h4>
                   <p style={{ fontSize: "30px" }}>{info.value}</p>
                 </div>
